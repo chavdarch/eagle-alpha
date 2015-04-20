@@ -25,3 +25,10 @@
      
   To run the test
     sbt test
+    
+## jaccard
+
+   how to run sample app:
+     sbt jaccard/run
+   how to run the test:
+      sbt jaccard/test
