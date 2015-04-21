@@ -23,13 +23,15 @@ class JaccardSimilarityTest extends FlatSpec with ShouldMatchers {
 
   it should "be calculated fpr input string against array of strings" in {
 
-    val result: Array[String] = JaccardSimilarity.calculate("ab", Array("", null, "ab", "abcd", "cd"))
+    val result: Array[String] = JaccardSimilarity.calculate("ab", Array("", null, "ab", "abcd", "cd", "abab"))
 
     result.contains("item 0, 0.0") should be(true)
     result.contains("item 1, 0.0") should be(true)
     result.contains("item 2, 1.0") should be(true)
     result.contains("item 3, 0.5") should be(true)
     result.contains("item 4, 0.0") should be(true)
+    result.contains("item 5, 1.0") should be(true)
+
   }
 
 }

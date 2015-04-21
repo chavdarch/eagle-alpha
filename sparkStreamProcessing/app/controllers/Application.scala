@@ -1,26 +1,30 @@
 package controllers
 
 import config.PlayConfig
-import org.pac4j.play.scala.ScalaController
 import play.api.Play.current
-import play.api.libs.iteratee.Enumerator
+import play.api.libs.iteratee.{Enumeratee, Enumerator}
 import play.api.libs.oauth.OAuthCalculator
 import play.api.libs.ws.WS
-import play.api.mvc.Action
+import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object Application extends ScalaController {
+object Application extends Controller {
 
-  def twitterTransformation = RequiresAuthentication("TwitterClient") { profile =>
-    Action.async { request =>
+  def twitterTransformation = Action.async { request =>
 
-     WS.url("https://stream.twitter.com/1.1/statuses/sample.json")
-       .sign(OAuthCalculator(PlayConfig.twitterConsumer, PlayConfig.twitterAccess))
-        .getStream().map(result => Ok.chunked(result._2))
-
-
+    //todo  - send transformation to spark
+    //two actors one for accessing spark and another for generating statistics
+    val transform: Enumeratee[Array[Byte],String] = Enumeratee.map[Array[Byte]]{
+      chunk => println(new String(chunk, "UTF-8")) ; new String(chunk, "UTF-8")
     }
+
+    WS.url("https://stream.twitter.com/1.1/statuses/sample.json")
+      .sign(OAuthCalculator(PlayConfig.twitterConsumer, PlayConfig.twitterAccess))
+      .withHeaders(("Content-Type", "application/json  charset=utf-8"))
+      .getStream().map(result => Ok.chunked(result._2.through(transform)))
+
+
   }
 
   def twitterTransformationStatistics = Action {
@@ -38,5 +42,5 @@ object Application extends ScalaController {
     }
 
   }
-  
+
 }

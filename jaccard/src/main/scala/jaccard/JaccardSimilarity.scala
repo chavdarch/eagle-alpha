@@ -1,7 +1,7 @@
 package jaccard
 
 private[jaccard] object JaccardSimilarityApp extends App {
-  val testArray = Array("", null, "ab", "abcd", "cd")
+  val testArray = Array("", null, "ab", "abcd", "cd", "abab")
   println(
     s"""
       Running jacard similarity test for: "ab" vs ${testArray.toList}
