@@ -10,7 +10,8 @@ scalaVersion in ThisBuild := "2.11.6"
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
 
 resolvers ++= Seq(
-  "Sonatype snapshots repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
+  "Sonatype snapshots repository" at "https://oss.sonatype.org/content/repositories/snapshots/",
+  "Typesafe repository" at "https://repo.typesafe.com/typesafe/releases/"
 )
 
 lazy val streaming = project
@@ -36,8 +37,8 @@ lazy val sparkStreamProcessing = project
   .settings(
     libraryDependencies ++= Seq(
       ws,
-      "org.apache.spark" % "spark-streaming_2.10" % "1.3.1",
-      "org.apache.spark" % "spark-streaming-twitter_2.10" % "1.3.1",
+      "org.apache.spark" % "spark-streaming_2.11" % "1.3.1",
+      "org.apache.spark" % "spark-streaming-twitter_2.11" % "1.3.1",
       "org.scalatest" % "scalatest_2.11" % "2.2.4" % Test
     )
   )

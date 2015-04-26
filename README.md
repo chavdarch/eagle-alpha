@@ -32,3 +32,29 @@
      sbt jaccard/run
    how to run the test:
       sbt jaccard/test
+      
+      
+## spark streaming
+    1. build spark for scala 2.11
+     download spark and run on localhost 8080
+     
+     build/mvn -Pyarn -Phadoop-2.4 -Dhadoop.version=2.4.0 -DskipTests clean package
+     ./sbin/start-all.sh
+     
+     access spark : http://localhost:8080/
+     
+    2. start play on localhost 9000
+    
+     sbt sparkStreamProcessing/run
+     
+    3. run spark transformation
+     curl "localhost:9000/sparkTransformation" 
+        - you can see the sample tweets printed on    server log
+     transformations stored under : "/tmp/spark/testSpark".
+     
+     Verification:
+       find transformation in "/tmp/spark/testSpark" and check that there is a hash tag in the play log file by searching for the text that is  near the tag
+        
+       
+     
+             

@@ -20,7 +20,6 @@ class Helloer extends Actor with ActorHelper {
 }
 
 object StreamingApp {
-  new StreamingSource()
   def main(args: Array[String]) {
     // Configuration for a Spark application.
     // Used to set various Spark parameters as key-value pairs.
